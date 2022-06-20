@@ -65,3 +65,6 @@ type Union = number | string
 let union: Union
 
 // 接口
+interface PersionInterface {
+  name: string
+}
