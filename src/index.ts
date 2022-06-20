@@ -100,8 +100,7 @@ function lala2(): 1 | 0 | -1 {
   return 1
 }
 
-function request(url: string, method: 'GET' | 'POST') {
-}
+function request(url: string, method: 'GET' | 'POST') {}
 
 const req = {
   url: 'http://www.baidu.com',
@@ -110,7 +109,7 @@ const req = {
 
 request(req.url, req.method)
 
-// null 和 undefined 
+// null 和 undefined
 function xxx(x?: null | number) {
   x?.toFixed() // 不一定运行
   x!.toFixed() // 一定运行
@@ -136,9 +135,7 @@ function printAll(strs: string | string[] | null) {
   if (typeof strs === 'object') {
     // null 也会进来
   } else if (typeof strs === 'string') {
-
   } else {
-
   }
 }
 
@@ -165,7 +162,7 @@ type Human = {
 
 function move(animal: Fish | Human) {
   if ('swim' in animal) {
-    (animal as Fish).swim()
+    ;(animal as Fish).swim()
   }
 }
 
@@ -195,9 +192,7 @@ function xx(x: Fish | Human): x is Fish {
 // never类型与穷尽性检查
 function xxxxxx(x: string | number) {
   if (typeof x === 'string') {
-
   } else if (typeof x === 'number') {
-
   } else {
     const a: never = x
     return
@@ -205,9 +200,7 @@ function xxxxxx(x: string | number) {
 }
 
 // 函数
-function aaa(fn: (a: string) => number) {
-
-}
+function aaa(fn: (a: string) => number) {}
 
 function xxxxx(a: string): number {
   return 1
@@ -220,9 +213,7 @@ type Tttt = {
   (a: string): void
 }
 
-function tt(a: string) {
-
-}
+function tt(a: string) {}
 tt.name = '1'
 
 function tT(t: Tttt) {
@@ -240,7 +231,7 @@ class Ctor {
 }
 
 type SomeConstructor = {
-  new(s: string): Ctor
+  new (s: string): Ctor
 }
 
 function newCtor(ctor: SomeConstructor) {
@@ -248,7 +239,7 @@ function newCtor(ctor: SomeConstructor) {
 }
 
 interface CallOrConstructor {
-  new(s: string): Date
+  new (s: string): Date
   (n?: number): number
 } // 既是构造函数 又是普通函数
 
@@ -284,9 +275,7 @@ function longest<T extends { length: number }>(a: T, b: T) {
 longest('11', '222')
 
 // 指定类型参数
-function lalalafla<T>(arr: T[], arr2: T[]) {
-
-}
+function lalalafla<T>(arr: T[], arr2: T[]) {}
 
 lalalafla<string | number>(['1'], [2])
 
@@ -317,14 +306,18 @@ calll((a, i) => {
 
 // 函数重载
 function makeDate(timestamp: number): Date // 重载函数
-function makeDate(year: number, month: number, date: number): Date  // 重载函数
-function makeDate(timestampOrYear: number, month?: number, date?: number): Date {
+function makeDate(year: number, month: number, date: number): Date // 重载函数
+function makeDate(
+  timestampOrYear: number,
+  month?: number,
+  date?: number
+): Date {
   if (month !== undefined && date !== undefined) {
     return new Date(timestampOrYear, month, date)
   } else {
     return new Date(timestampOrYear)
   }
-}  // 实现函数
+} // 实现函数
 
 makeDate(1212)
 makeDate(1, 2, 3)
@@ -350,16 +343,14 @@ db.filterUsers(function (this: User) {
 })
 
 // 其他类型
-function a(): void { } // void 没有任何返回值的函数
+function a(): void {} // void 没有任何返回值的函数
 // object 任何的不是基元的值
 // unknown 对unknown的任何操作都会报错
 // never 永不会被观察到
-// Function 
+// Function
 
 // 展开运算符 形参展开
-function nnnnn(n: number, ...ns: number[]) {
-
-}
+function nnnnn(n: number, ...ns: number[]) {}
 
 nnnnn(1, 2, 3, 4, 5)
 
@@ -370,7 +361,7 @@ arr11.push(...arr22)
 Math.max(...arr22)
 
 // 参数解构
-function sumsum({ a, b, c }: { a: number, b: number, c: number }) {
+function sumsum({ a, b, c }: { a: number; b: number; c: number }) {
   return a + b + c
 }
 
@@ -384,7 +375,7 @@ const fff: func = function () {
 }
 
 function aaxx(): void {
-  return  // 不能有返回值
+  return // 不能有返回值
 }
 
 // 对象类型
@@ -409,4 +400,110 @@ function getP3({ name, age }: Persion11) {
 }
 
 // 只读属性
+interface SomeType {
+  readonly prop: string
+}
 
+let aaa2: SomeType = {
+  prop: '1212'
+}
+
+// 索引签名
+interface StrngArray {
+  [index: number]: string
+}
+const arrrr: StrngArray = ['1', '2']
+
+interface SomeTTT {
+  [props: string]: string
+}
+const comse: SomeTTT = { name: '1' }
+
+interface ReadOnly {
+  [props: string]: string
+}
+const readonly: ReadOnly = {
+  name: '1'
+}
+
+// 扩展类型
+interface BAseff extends SomeType {
+  naame: string
+}
+
+interface HHHH extends SomeType, Persion11 {
+  name: string
+}
+
+// 交叉类型
+type One = {
+  one: string
+  type: number
+}
+type Two = {
+  two: string
+  type: number
+}
+type Three = One & Two
+
+const three: Three = {
+  one: '1',
+  two: '2',
+  type: 3
+}
+
+// interface 可重复 type不可重复
+
+// 泛型对象类型
+interface Box<T> {
+  content: T
+}
+
+type Box2<T> = {
+  content: T
+}
+
+const box: Box<string> = {
+  content: '1'
+}
+
+type OOME<T> = T | null
+type MMM<T> = T | null
+type FFFF<T> = MMM<OOME<T>>
+
+// 类型操作
+function ientity<T>(ar: T): T {
+  return ar
+}
+
+let aii: number = ientity(1)
+// 定义泛型函数
+interface YYYYY {
+  <T>(a: T): T
+}
+interface YYYYYa<T> {
+  (a: T): T
+}
+const fffdd: YYYYY = ientity
+const fffddd: YYYYYa<string> = ientity
+
+// 泛型类
+
+class Persionz<T> {
+  name: T
+  constructor(a: T) {
+    this.name = a
+  }
+}
+let persionz = new Persionz<number>(1)
+
+// keyof
+function aasdd<T, Key extends keyof T>(a: T, b: Key) {}
+
+let xxxxxxf = {
+  a: 1,
+  b: 2
+}
+aasdd(xxxxxxf, 'a')
+
+//
