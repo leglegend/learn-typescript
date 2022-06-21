@@ -100,7 +100,7 @@ function lala2(): 1 | 0 | -1 {
   return 1
 }
 
-function request(url: string, method: 'GET' | 'POST') { }
+function request(url: string, method: 'GET' | 'POST') {}
 
 const req = {
   url: 'http://www.baidu.com',
@@ -162,7 +162,7 @@ type Human = {
 
 function move(animal: Fish | Human) {
   if ('swim' in animal) {
-    ; (animal as Fish).swim()
+    ;(animal as Fish).swim()
   }
 }
 
@@ -200,7 +200,7 @@ function xxxxxx(x: string | number) {
 }
 
 // 函数
-function aaa(fn: (a: string) => number) { }
+function aaa(fn: (a: string) => number) {}
 
 function xxxxx(a: string): number {
   return 1
@@ -213,7 +213,7 @@ type Tttt = {
   (a: string): void
 }
 
-function tt(a: string) { }
+function tt(a: string) {}
 tt.name = '1'
 
 function tT(t: Tttt) {
@@ -231,7 +231,7 @@ class Ctor {
 }
 
 type SomeConstructor = {
-  new(s: string): Ctor
+  new (s: string): Ctor
 }
 
 function newCtor(ctor: SomeConstructor) {
@@ -239,7 +239,7 @@ function newCtor(ctor: SomeConstructor) {
 }
 
 interface CallOrConstructor {
-  new(s: string): Date
+  new (s: string): Date
   (n?: number): number
 } // 既是构造函数 又是普通函数
 
@@ -275,7 +275,7 @@ function longest<T extends { length: number }>(a: T, b: T) {
 longest('11', '222')
 
 // 指定类型参数
-function lalalafla<T>(arr: T[], arr2: T[]) { }
+function lalalafla<T>(arr: T[], arr2: T[]) {}
 
 lalalafla<string | number>(['1'], [2])
 
@@ -343,14 +343,14 @@ db.filterUsers(function (this: User) {
 })
 
 // 其他类型
-function a(): void { } // void 没有任何返回值的函数
+function a(): void {} // void 没有任何返回值的函数
 // object 任何的不是基元的值
 // unknown 对unknown的任何操作都会报错
 // never 永不会被观察到
 // Function
 
 // 展开运算符 形参展开
-function nnnnn(n: number, ...ns: number[]) { }
+function nnnnn(n: number, ...ns: number[]) {}
 
 nnnnn(1, 2, 3, 4, 5)
 
@@ -498,7 +498,7 @@ class Persionz<T> {
 let persionz = new Persionz<number>(1)
 
 // keyof
-function aasdd<T, Key extends keyof T>(a: T, b: Key) { }
+function aasdd<T, Key extends keyof T>(a: T, b: Key) {}
 
 let xxxxxxf = {
   a: 1,
@@ -522,7 +522,7 @@ type KOI = keyof KeyOfIndex
 let koi: KOI = 1
 
 // 在泛型中使用类型
-function create<T>(c: { new(): T }): T {
+function create<T>(c: { new (): T }): T {
   return new c()
 }
 
@@ -569,7 +569,9 @@ type Str = Flatten<string[]>
 type Num = Flatten<number>
 
 // infer
-type GtRefef<T> = Type extends (...arg: never[]) => infer Return ? Return : never
+type GtRefef<T> = Type extends (...arg: never[]) => infer Return
+  ? Return
+  : never
 
 // 类
 class Class {
@@ -613,7 +615,7 @@ class C {
     this._length = val
   }
 }
-// 只有get 只读 
+// 只有get 只读
 class Thing {
   _size = 0
 
@@ -644,25 +646,19 @@ interface Firut {
 
 class Apple implements Firut {
   x = '1'
-  ping(c: number | string) { // 实现接口兼容就可以
-
+  ping(c: number | string) {
+    // 实现接口兼容就可以
   }
 }
 
-class LittleApple extends Apple {
-
-}
+class LittleApple extends Apple {}
 
 // 重写方法
 class Bang {
-  ping() {
-
-  }
+  ping() {}
 }
 class BigApple extends Bang {
-  ping(n?: boolean) {
-
-  }
+  ping(n?: boolean) {}
 }
 
 // 初始化顺序
@@ -690,14 +686,14 @@ class AppleError extends Error {
 // 成员的可见性
 // public(默认值) protected pricate
 class Greeter {
-  public getPublic() { // 都能访问
-
+  public getPublic() {
+    // 都能访问
   }
-  private getPrivate() { // 只有当前类能访问
-
+  private getPrivate() {
+    // 只有当前类能访问
   }
-  protected getProtected() { // 基类和子类能访问
-
+  protected getProtected() {
+    // 基类和子类能访问
   }
 }
 
@@ -720,9 +716,7 @@ a1.saveAs(a2)
 class Static {
   static x = 10
   private y = 5
-  static getStatic() {
-
-  }
+  static getStatic() {}
   static getA() {
     this.x
     Static.x
@@ -760,6 +754,76 @@ const b: Box3<string> = new Box3('1')
 
 // 类运行时中的this
 
-
 // this类型
+class Box4 {
+  content: string = ''
 
+  set(al: string) {
+    this.content = al
+    return this
+  }
+}
+
+// 类型守卫的this
+class FileSystemObj {
+  isFile(): this is Box4 {
+    return this instanceof Box4
+  }
+}
+
+// 参数属性
+class Params {
+  constructor(
+    public readonly x: number,
+    protected y: number,
+    private z: number
+  ) {}
+}
+
+// 类表达式 匿名类
+const someClass = class<T> {}
+
+// 抽象类和成员
+
+// 抽象类 不能被实例化 只能被继承
+abstract class Abstract {
+  abstract getName(): string
+
+  printName() {}
+}
+
+class Axxx extends Abstract {
+  getName() {
+    return '1'
+  }
+}
+const axxx = new Axxx()
+axxx.printName()
+axxx.getName()
+
+// 类之间的关系
+class Point1 {
+  x: number = 2
+  y: number = 2
+}
+class Point2 {
+  x: number = 1
+  y: number = 1
+}
+
+const p1: Point1 = new Point2()
+
+class Persion2 {
+  name: string = '1'
+  age: number = 11
+}
+
+class Emplyee {
+  name: string = '1'
+  age: number = 11
+  salary: number = 110
+}
+
+const p2: Persion2 = new Emplyee()
+
+// 模块
