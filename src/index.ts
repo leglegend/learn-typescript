@@ -100,7 +100,7 @@ function lala2(): 1 | 0 | -1 {
   return 1
 }
 
-function request(url: string, method: 'GET' | 'POST') {}
+function request(url: string, method: 'GET' | 'POST') { }
 
 const req = {
   url: 'http://www.baidu.com',
@@ -162,7 +162,7 @@ type Human = {
 
 function move(animal: Fish | Human) {
   if ('swim' in animal) {
-    ;(animal as Fish).swim()
+    ; (animal as Fish).swim()
   }
 }
 
@@ -200,7 +200,7 @@ function xxxxxx(x: string | number) {
 }
 
 // 函数
-function aaa(fn: (a: string) => number) {}
+function aaa(fn: (a: string) => number) { }
 
 function xxxxx(a: string): number {
   return 1
@@ -213,7 +213,7 @@ type Tttt = {
   (a: string): void
 }
 
-function tt(a: string) {}
+function tt(a: string) { }
 tt.name = '1'
 
 function tT(t: Tttt) {
@@ -231,7 +231,7 @@ class Ctor {
 }
 
 type SomeConstructor = {
-  new (s: string): Ctor
+  new(s: string): Ctor
 }
 
 function newCtor(ctor: SomeConstructor) {
@@ -239,7 +239,7 @@ function newCtor(ctor: SomeConstructor) {
 }
 
 interface CallOrConstructor {
-  new (s: string): Date
+  new(s: string): Date
   (n?: number): number
 } // 既是构造函数 又是普通函数
 
@@ -275,7 +275,7 @@ function longest<T extends { length: number }>(a: T, b: T) {
 longest('11', '222')
 
 // 指定类型参数
-function lalalafla<T>(arr: T[], arr2: T[]) {}
+function lalalafla<T>(arr: T[], arr2: T[]) { }
 
 lalalafla<string | number>(['1'], [2])
 
@@ -343,14 +343,14 @@ db.filterUsers(function (this: User) {
 })
 
 // 其他类型
-function a(): void {} // void 没有任何返回值的函数
+function a(): void { } // void 没有任何返回值的函数
 // object 任何的不是基元的值
 // unknown 对unknown的任何操作都会报错
 // never 永不会被观察到
 // Function
 
 // 展开运算符 形参展开
-function nnnnn(n: number, ...ns: number[]) {}
+function nnnnn(n: number, ...ns: number[]) { }
 
 nnnnn(1, 2, 3, 4, 5)
 
@@ -498,7 +498,7 @@ class Persionz<T> {
 let persionz = new Persionz<number>(1)
 
 // keyof
-function aasdd<T, Key extends keyof T>(a: T, b: Key) {}
+function aasdd<T, Key extends keyof T>(a: T, b: Key) { }
 
 let xxxxxxf = {
   a: 1,
@@ -506,4 +506,260 @@ let xxxxxxf = {
 }
 aasdd(xxxxxxf, 'a')
 
-//
+type KeyOf = {
+  x: string
+  y: string
+}
+type P = keyof KeyOf
+let p: P = 'x'
+p = 'y'
+
+type KeyOfIndex = {
+  [index: string]: boolean
+}
+
+type KOI = keyof KeyOfIndex
+let koi: KOI = 1
+
+// 在泛型中使用类型
+function create<T>(c: { new(): T }): T {
+  return new c()
+}
+
+class BeeKeeper {
+  hasMask: boolean = true
+}
+
+class ZooKeeper {
+  nametag: string = 'Mikle'
+}
+
+class Animal {
+  numLegs: number = 4
+}
+
+class Lion extends Animal {
+  keeper: ZooKeeper = new ZooKeeper()
+}
+
+function createInstance<A extends Animal>(c: new () => A): A {
+  return new c()
+}
+createInstance(Lion).keeper.nametag
+
+// typeof类型操作符
+let tos = 'hellow'
+let tos1: typeof tos = '2'
+type K = ReturnType<any>
+
+// 索引返回类型
+type PersionIndex = {
+  name: string
+}
+let persionName: PersionIndex['name'] = '12'
+
+// 条件类型
+type Lion2 = Lion extends Animal ? string : number
+
+// 条件类型约束
+type Flatten<T> = T extends any[] ? T[number] : T
+// type Str = string
+type Str = Flatten<string[]>
+// type Num = number
+type Num = Flatten<number>
+
+// infer
+type GtRefef<T> = Type extends (...arg: never[]) => infer Return ? Return : never
+
+// 类
+class Class {
+  readonly x: number
+  y: number
+  z!: number
+
+  constructor(x = 0, y = 0) {
+    this.x = x
+    this.y = y
+  }
+}
+
+// cls.x = 1 error
+const cls = new Class(1)
+cls.y = 2
+
+// 构造器
+class Derviec extends Class {
+  constructor() {
+    super()
+  }
+}
+
+// 类型方法
+class ClassFn {
+  x: number = 10
+
+  scale(n: number) {
+    this.x = this.x * n
+  }
+}
+
+// getters setters 访问器
+class C {
+  _length = 1
+  get length() {
+    return this._length
+  }
+  set length(val) {
+    this._length = val
+  }
+}
+// 只有get 只读 
+class Thing {
+  _size = 0
+
+  get size(): number {
+    return this._size
+  }
+
+  set size(val: string | number) {
+    this._size = Number(val)
+  }
+}
+
+// 索引签名
+class MyClass {
+  [s: string]: boolean | ((s: string) => boolean)
+  x: boolean = true
+  check(s: string) {
+    return this[s] as boolean
+  }
+}
+
+// 类继承 implements
+interface Firut {
+  ping(c: string): void
+  x: string
+  y?: number
+}
+
+class Apple implements Firut {
+  x = '1'
+  ping(c: number | string) { // 实现接口兼容就可以
+
+  }
+}
+
+class LittleApple extends Apple {
+
+}
+
+// 重写方法
+class Bang {
+  ping() {
+
+  }
+}
+class BigApple extends Bang {
+  ping(n?: boolean) {
+
+  }
+}
+
+// 初始化顺序
+class BaseClass {
+  name = 'base'
+  constructor() {
+    console.log(this.name)
+  }
+}
+
+class Dbase extends BaseClass {
+  name = 'dbaswe'
+}
+
+const d = new Dbase()
+// 'base'
+
+// 继承内置类型
+class AppleError extends Error {
+  constructor(m: string) {
+    super()
+  }
+}
+
+// 成员的可见性
+// public(默认值) protected pricate
+class Greeter {
+  public getPublic() { // 都能访问
+
+  }
+  private getPrivate() { // 只有当前类能访问
+
+  }
+  protected getProtected() { // 基类和子类能访问
+
+  }
+}
+
+// 跨实例访问私有成员
+class A {
+  private x = 10
+  constructor(x: number) {
+    this.x = x
+  }
+  saveAs(other: A) {
+    return other.x == other.x
+  }
+}
+
+let a1 = new A(1)
+let a2 = new A(2)
+a1.saveAs(a2)
+
+// 静态成员
+class Static {
+  static x = 10
+  private y = 5
+  static getStatic() {
+
+  }
+  static getA() {
+    this.x
+    Static.x
+  }
+}
+Static.x
+Static.getStatic()
+
+let newStatic = new Static()
+// newStatic.x error
+
+// 类里的static区块
+class Foo {
+  static #foo = 1 // 专用，外部不能访问
+  static bar = 2
+  a = 1
+  getFoo() {
+    // this指向实例
+    return Foo.#foo + Foo.bar + this.a
+  }
+  static getBar() {
+    // this指向Foo类
+  }
+}
+
+// 泛型类
+
+class Box3<T> {
+  content: T
+  constructor(t: T) {
+    this.content = t
+  }
+}
+const b: Box3<string> = new Box3('1')
+
+// 类运行时中的this
+
+
+// this类型
+
